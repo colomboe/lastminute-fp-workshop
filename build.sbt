@@ -1,4 +1,6 @@
 addCommandAlias("fm", "all compile:scalafmt test:scalafmt")
+addCommandAlias("cc", "all clean compile")
+addCommandAlias("c", "compile")
 addCommandAlias("t", "test")
 addCommandAlias("to", "testOnly")
 addCommandAlias("ps", "projects")
@@ -7,7 +9,7 @@ addCommandAlias("p", "project")
 lazy val global = project
   .in(file("."))
   .settings(settings)
-  .aggregate(exercises, marsroverkata, random)
+  .aggregate(exercises, marsroverkata, random, inventory)
 
 lazy val exercises = project
   .settings(
@@ -24,6 +26,12 @@ lazy val marsroverkata = project
 lazy val random = project
   .settings(
     name := "random",
+    settings
+  )
+
+lazy val inventory = project
+  .settings(
+    name := "inventory",
     settings
   )
 
@@ -74,15 +82,10 @@ lazy val resolversSettings = Seq(
   Resolver.sonatypeRepo("releases")
 )
 
-lazy val monocleVersion = "1.5.1-cats"
-
 lazy val libsSettings = Seq(
   "org.typelevel"              %% "cats-core"     % "1.4.0",
   "org.typelevel"              %% "cats-effect"   % "1.0.0",
   "org.typelevel"              %% "cats-mtl-core" % "0.2.3",
-  "com.github.julien-truffaut" %% "monocle-core"  % monocleVersion,
-  "com.github.julien-truffaut" %% "monocle-macro" % monocleVersion,
   "net.debasishg"              %% "redisclient"   % "3.7",
-  "com.github.mpilquist"       %% "simulacrum"    % "0.13.0",
   "io.monix"                   %% "minitest"      % "2.1.1" % Test
 )
